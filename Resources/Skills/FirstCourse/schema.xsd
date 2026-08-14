@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+  <xs:simpleType name="Text50"><xs:restriction base="xs:string"><xs:minLength value="1"/><xs:maxLength value="50"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="Text64"><xs:restriction base="xs:string"><xs:minLength value="1"/><xs:maxLength value="64"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="Text100"><xs:restriction base="xs:string"><xs:minLength value="1"/><xs:maxLength value="100"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="Text200"><xs:restriction base="xs:string"><xs:minLength value="1"/><xs:maxLength value="200"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="Text500"><xs:restriction base="xs:string"><xs:minLength value="1"/><xs:maxLength value="500"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="Text1000"><xs:restriction base="xs:string"><xs:minLength value="1"/><xs:maxLength value="1000"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="Text4000"><xs:restriction base="xs:string"><xs:minLength value="1"/><xs:maxLength value="4000"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="SexType"><xs:restriction base="xs:string"><xs:enumeration value="男"/><xs:enumeration value="女"/><xs:enumeration value="未知"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="AgeType"><xs:restriction base="xs:nonNegativeInteger"><xs:minInclusive value="0"/><xs:maxInclusive value="150"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="PositiveIntegerType"><xs:restriction base="xs:positiveInteger"><xs:maxInclusive value="999"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="ZonedDateTimeType"><xs:restriction base="xs:string"><xs:pattern value="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+\-]\d{2}:\d{2})"/><xs:maxLength value="35"/></xs:restriction></xs:simpleType>
+  <xs:complexType name="PatientType"><xs:sequence><xs:element name="姓名" type="Text100"/><xs:element name="性别" type="SexType"/><xs:element name="年龄" type="AgeType"/><xs:element name="病区" type="Text200"/><xs:element name="床号" type="Text50"/><xs:element name="住院号" type="Text64"/><xs:element name="ID号" type="Text64"/></xs:sequence></xs:complexType>
+  <xs:complexType name="ClinicalPresentationType"><xs:sequence><xs:element name="发病及病程" type="Text4000"/><xs:element name="主要症状" type="Text4000"/><xs:element name="既往史" type="Text4000"/><xs:element name="查体" type="Text4000"/></xs:sequence></xs:complexType>
+  <xs:complexType name="ExaminationItemType"><xs:sequence><xs:element name="项目名称" type="Text200"/><xs:element name="结果" type="Text4000"/></xs:sequence></xs:complexType>
+  <xs:complexType name="CaseFeaturesType"><xs:sequence><xs:element name="临床表现" type="ClinicalPresentationType"/><xs:element name="辅助资料" minOccurs="0"><xs:complexType><xs:sequence><xs:element name="检查项目" type="ExaminationItemType" minOccurs="1" maxOccurs="100"/></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType>
+  <xs:complexType name="DiagnosticDiscussionType"><xs:sequence><xs:element name="诊断依据" type="Text4000"/><xs:element name="鉴别诊断" type="Text4000"/><xs:element name="入院诊断"><xs:complexType><xs:sequence><xs:element name="诊断" type="Text500" minOccurs="1" maxOccurs="20"/></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType>
+  <xs:complexType name="PlanItemType"><xs:sequence><xs:element name="序号" type="PositiveIntegerType"/><xs:element name="内容" type="Text4000"/></xs:sequence></xs:complexType>
+  <xs:complexType name="TreatmentPlanType"><xs:sequence><xs:element name="计划" type="PlanItemType" minOccurs="1" maxOccurs="50"/></xs:sequence></xs:complexType>
+  <xs:complexType name="DoctorType"><xs:sequence><xs:element name="带组医师" type="Text100"/><xs:element name="书写医师" type="Text100"/></xs:sequence></xs:complexType>
+  <xs:element name="首次病程记录"><xs:complexType><xs:sequence><xs:element name="医院名称" type="Text200"/><xs:element name="患者信息" type="PatientType"/><xs:element name="记录时间" type="ZonedDateTimeType"/><xs:element name="病例特点" type="CaseFeaturesType"/><xs:element name="拟诊讨论" type="DiagnosticDiscussionType"/><xs:element name="病例分型" type="Text1000" minOccurs="0"/><xs:element name="诊疗计划" type="TreatmentPlanType"/><xs:element name="医师信息" type="DoctorType"/></xs:sequence></xs:complexType></xs:element>
+</xs:schema>

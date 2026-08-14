@@ -1,0 +1,10 @@
+{
+  "id": "first-course",
+  "promptFile": "prompt.md",
+  "templateFile": "template.xml",
+  "schemaFile": "schema.xsd",
+  "requiredTool": "write_first_course_xml",
+  "tools": [
+    "write_first_course_xml"
+  ]
+}

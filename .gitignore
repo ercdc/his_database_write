@@ -1,0 +1,8 @@
+bin/
+obj/
+publish/
+publish-verify/
+Output/
+.vs/
+*.user
+appsettings.Development.json

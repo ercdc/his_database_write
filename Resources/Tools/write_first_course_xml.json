@@ -1,0 +1,19 @@
+{
+  "type": "function",
+  "function": {
+    "name": "write_first_course_xml",
+    "strict": true,
+    "description": "校验并将完整首次病程记录 XML 写入本地文件。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "xml": {
+          "type": "string",
+          "description": "符合当前首次病程记录 XML 模板和 XSD 的完整 XML 文档。"
+        }
+      },
+      "required": ["xml"],
+      "additionalProperties": false
+    }
+  }
+}
