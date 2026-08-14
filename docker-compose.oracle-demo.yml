@@ -1,0 +1,15 @@
+services:
+  oracle:
+    image: gvenzl/oracle-free:23-slim-faststart
+    container_name: his-oracle-demo
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: OracleDemo_2026
+      APP_USER: HIS_DEMO
+      APP_USER_PASSWORD: HisDemo_2026
+    volumes:
+      - his-oracle-demo-data:/opt/oracle/oradata
+
+volumes:
+  his-oracle-demo-data:

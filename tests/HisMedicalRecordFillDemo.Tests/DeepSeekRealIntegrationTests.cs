@@ -16,15 +16,15 @@ public sealed class DeepSeekRealIntegrationTests
             return;
 
         var environment = new TestHostEnvironment(AppContext.BaseDirectory);
-        var fixture = new HisFixtureProvider(environment);
-        var writer = new XmlRecordWriter();
+        var fixture = new FixtureHisEncounterDataProvider(environment);
+        var writer = new LocalFirstCourseRecordWriter(new XmlRecordValidator(), environment);
         using var httpClient = new HttpClient { Timeout = TimeSpan.FromMinutes(2) };
         var options = Microsoft.Extensions.Options.Options.Create(new DeepSeekOptions());
         var client = new DeepSeekToolCallingClient(
             httpClient,
             options,
             new ToolRegistry([new WriteFirstCourseXmlTool(writer)]));
-        var hisData = await fixture.ReadAsync("CASE-001", "TEST20260811001", CancellationToken.None);
+        var hisData = await fixture.GetRawDataAsync("CASE-001", "TEST20260811001", CancellationToken.None);
         var skill = await new FirstCourseSkill(environment, new ToolDefinitionLoader(environment))
             .BuildContextAsync(hisData, CancellationToken.None);
 

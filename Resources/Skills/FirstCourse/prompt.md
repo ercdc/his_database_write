@@ -9,8 +9,8 @@
 3. `记录时间` 使用 `yyyy-MM-ddTHH:mm:ss+08:00` 格式；年龄只填写整数。
 4. “辅助资料”按检查项目逐项写入；“入院诊断”和“诊疗计划”分别按原始顺序写入。
 5. 不在普通回复中输出 XML、Markdown 或说明文字。
-6. 完成后必须且只能调用 `write_first_course_xml` 工具，并将完整 XML 放入 `xml` 参数。
+6. 完成后必须且只能调用 `write_first_course_xml` 工具，并将完整 XML 放入 `xml` 参数。该工具由业务系统负责校验并回写首次病程；你不能自行声称已经写入成功。
 
 ## 工具调用约定
 
-`write_first_course_xml` 的 `xml` 参数必须是从 XML 声明开始的完整 XML 文档，根节点必须是 `首次病程记录`。
+`write_first_course_xml` 的 `xml` 参数必须是从 XML 声明开始的完整 XML 文档，根节点必须是 `首次病程记录`。工具执行后会返回实际写入结果。

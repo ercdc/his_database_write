@@ -16,10 +16,12 @@ public sealed class DeepSeekToolCallingClientTests
     [Fact]
     public async Task GenerateAsync_模型调用唯一工具_执行写入并完成第二轮确认()
     {
-        var handler = new RecordingHandler(XmlRecordWriterTests.ValidXml);
+        var handler = new RecordingHandler(LocalFirstCourseRecordWriterTests.ValidXml);
         var client = new HttpClient(handler);
         var environment = new TestHostEnvironment(AppContext.BaseDirectory);
-        var writer = new XmlRecordWriter();
+        var writer = new LocalFirstCourseRecordWriter(
+            new XmlRecordValidator(),
+            environment);
         var registry = new ToolRegistry([new WriteFirstCourseXmlTool(writer)]);
         var options = Microsoft.Extensions.Options.Options.Create(new DeepSeekOptions
         {

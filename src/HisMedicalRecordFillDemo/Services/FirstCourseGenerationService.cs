@@ -4,13 +4,13 @@ using HisMedicalRecordFillDemo.Skills;
 namespace HisMedicalRecordFillDemo.Services;
 
 public sealed class FirstCourseGenerationService(
-    IHisFixtureProvider fixtureProvider,
+    IHisEncounterDataProvider hisEncounterDataProvider,
     FirstCourseSkill firstCourseSkill,
     IDeepSeekToolCallingClient deepSeekClient)
 {
     public async Task<GeneratedXmlResult> GenerateAsync(string patientId, string visitId, CancellationToken cancellationToken)
     {
-        var hisData = await fixtureProvider.ReadAsync(patientId, visitId, cancellationToken);
+        var hisData = await hisEncounterDataProvider.GetRawDataAsync(patientId, visitId, cancellationToken);
         var skill = await firstCourseSkill.BuildContextAsync(hisData, cancellationToken);
         var result = await deepSeekClient.RunAsync(skill, patientId, visitId, cancellationToken);
         return new GeneratedXmlResult(

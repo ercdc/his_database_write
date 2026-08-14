@@ -10,5 +10,6 @@
 | [design/00-原始流程.md](./design/00-原始流程.md) | 项目最初收集的流程草稿，保留作需求追溯。 |
 | [design/设计信息记录.md](./design/设计信息记录.md) | 持续新增的医院模型、HIS 接口和设计信息。 |
 | [operations/服务部署与测试命令.md](./operations/服务部署与测试命令.md) | 本地运行、测试、发布命令。 |
+| [operations/Oracle本地Demo数据库.md](./operations/Oracle本地Demo数据库.md) | Docker Oracle Free、初始化 SQL、数据库集成测试和 Oracle 模式启动命令。 |
 
 根目录保留 `README.md`，作为项目入口。

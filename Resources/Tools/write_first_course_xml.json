@@ -3,7 +3,7 @@
   "function": {
     "name": "write_first_course_xml",
     "strict": true,
-    "description": "校验并将完整首次病程记录 XML 写入本地文件。",
+    "description": "校验并将完整首次病程记录 XML 回写至业务系统；工具返回实际写入结果。",
     "parameters": {
       "type": "object",
       "properties": {

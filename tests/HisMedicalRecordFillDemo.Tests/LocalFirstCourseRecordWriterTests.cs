@@ -4,26 +4,30 @@ using HisMedicalRecordFillDemo.Services;
 
 namespace HisMedicalRecordFillDemo.Tests;
 
-public sealed class XmlRecordWriterTests
+public sealed class LocalFirstCourseRecordWriterTests
 {
     [Fact]
     public async Task WriteAsync_合法XML_通过Xsd并创建唯一文件()
     {
-        var writer = new XmlRecordWriter();
+        var writer = new LocalFirstCourseRecordWriter(
+            new XmlRecordValidator(),
+            new TestHostEnvironment(AppContext.BaseDirectory));
         var context = CreateContext();
 
-        var firstPath = await writer.WriteAsync(ValidXml, context, CancellationToken.None);
-        var secondPath = await writer.WriteAsync(ValidXml, context, CancellationToken.None);
+        var firstResult = await writer.WriteAsync(ValidXml, context, CancellationToken.None);
+        var secondResult = await writer.WriteAsync(ValidXml, context, CancellationToken.None);
 
-        Assert.True(File.Exists(firstPath));
-        Assert.True(File.Exists(secondPath));
-        Assert.NotEqual(firstPath, secondPath);
+        Assert.True(File.Exists(firstResult.Location));
+        Assert.True(File.Exists(secondResult.Location));
+        Assert.NotEqual(firstResult.Location, secondResult.Location);
     }
 
     [Fact]
     public async Task WriteAsync_错误节点顺序_拒绝写入()
     {
-        var writer = new XmlRecordWriter();
+        var writer = new LocalFirstCourseRecordWriter(
+            new XmlRecordValidator(),
+            new TestHostEnvironment(AppContext.BaseDirectory));
         var invalid = ValidXml.Replace("<姓名>患者甲</姓名>\n    <性别>男</性别>", "<性别>男</性别>\n    <姓名>患者甲</姓名>");
 
         var exception = await Assert.ThrowsAsync<XmlValidationException>(() => writer.WriteAsync(invalid, CreateContext(), CancellationToken.None));

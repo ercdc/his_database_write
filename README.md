@@ -2,9 +2,11 @@
 
 该 Demo 提供唯一业务接口：接收患者 ID 和就诊 ID，读取本地模拟 HIS 文本，调用 DeepSeek Tool Calling 生成首次病程 XML；仅在 XML 通过 XSD 后写入本地 `Output/`。
 
-不连接 HIS、Oracle 或其他数据库，也不包含鉴权、多业务类型或缺失数据补全。
+默认使用本地 Fixture 与 XML 文件输出；设置 Oracle 模式后，可读取本地 Oracle Demo 数据库并回写首次病程 XML。项目仍不包含鉴权、多业务类型或缺失数据补全。
 
 项目方案、设计记录和操作命令见 [docs/README.md](./docs/README.md)。
+
+Oracle 本地 Demo 的容器、连接信息与启动命令见 [docs/operations/Oracle本地Demo数据库.md](./docs/operations/Oracle本地Demo数据库.md)。
 
 ## 运行
 
