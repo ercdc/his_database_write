@@ -1,0 +1,60 @@
+openapi: 3.0.3
+info:
+  title: HIS 数据病历填充服务
+  version: 0.1.0
+  description: 根据患者与就诊标识读取 HIS 数据，生成并回写首次病程 XML。
+
+servers:
+  - url: http://127.0.0.1:5088
+    description: 本地开发服务
+
+paths:
+  /api/first-course/generate:
+    post:
+      summary: 生成首次病程并回写
+      description: 从 Oracle 读取患者 HIS 数据，调用模型生成 XML，并写回首次病程表。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - patientId
+                - visitId
+              properties:
+                patientId:
+                  type: string
+                  description: 患者标识
+                  example: CASE-001
+                visitId:
+                  type: string
+                  description: 就诊标识
+                  example: TEST20260811001
+      responses:
+        "200":
+          description: XML 已生成并写回数据库
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - outputPath
+                  - message
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  outputPath:
+                    type: string
+                    example: oracle://FIRST_COURSE_RECORD/CASE-001/TEST20260811001
+                  message:
+                    type: string
+                    description: 模型在工具执行后的确认信息
+        "400":
+          description: patientId 或 visitId 为空
+        "404":
+          description: Oracle 中不存在对应患者或就诊记录
+        "500":
+          description: 模型调用、XML 校验或数据库回写失败
